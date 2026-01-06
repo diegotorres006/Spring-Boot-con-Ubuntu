@@ -84,4 +84,14 @@ public class ProductServiceImpl implements ProductService {
         );
         return new Object() { public String message = "Deleted successfully"; };
     }
+
+    @Override
+    public boolean validateName(Integer id, String name) {
+        repository.findByName(name).ifPresent(existing -> {
+            if (id == null || existing.getId() != id.longValue()) {
+                throw new ConflictException("Ya existe un producto con el nombre " + name);
+            }
+        });
+        return true;
+    }
 }

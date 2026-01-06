@@ -10,4 +10,5 @@ public interface ProductService {
     Object update(int id, UpdateProductDto dto);
     Object partialUpdate(int id, PartialUpdateProductDto dto);
     Object delete(int id);
+    boolean validateName(Integer id, String name);
 }
