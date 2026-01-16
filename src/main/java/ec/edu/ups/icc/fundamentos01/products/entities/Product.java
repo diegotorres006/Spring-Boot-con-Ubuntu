@@ -1,9 +1,9 @@
-package ec.edu.ups.icc.fundamentos01.products.entities;
+package ec.edu.ups.icc.Springboot01.products.entities;
 
-import ec.edu.ups.icc.fundamentos01.products.dtos.CreateProductDto;
-import ec.edu.ups.icc.fundamentos01.products.dtos.UpdateProductDto;
-import ec.edu.ups.icc.fundamentos01.users.entities.UserEntity;
-import ec.edu.ups.icc.fundamentos01.categories.entities.CategoryEntity;
+import ec.edu.ups.icc.Springboot01.products.dtos.CreateProductDto;
+import ec.edu.ups.icc.Springboot01.products.dtos.UpdateProductDto;
+import ec.edu.ups.icc.Springboot01.users.entities.UserEntity;
+import ec.edu.ups.icc.Springboot01.categories.entities.CategoryEntity;
 import java.util.Set;
 
 public class Product {

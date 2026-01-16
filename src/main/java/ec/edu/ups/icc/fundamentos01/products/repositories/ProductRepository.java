@@ -1,6 +1,6 @@
-package ec.edu.ups.icc.fundamentos01.products.repositories;
+package ec.edu.ups.icc.Springboot01.products.repositories;
 
-import ec.edu.ups.icc.fundamentos01.products.entities.ProductEntity;
+import ec.edu.ups.icc.Springboot01.products.entities.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;

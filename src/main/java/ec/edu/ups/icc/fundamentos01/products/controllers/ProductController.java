@@ -1,7 +1,7 @@
-package ec.edu.ups.icc.fundamentos01.products.controllers;
+package ec.edu.ups.icc.Springboot01.products.controllers;
 
-import ec.edu.ups.icc.fundamentos01.products.dtos.*;
-import ec.edu.ups.icc.fundamentos01.products.services.ProductService;
+import ec.edu.ups.icc.Springboot01.products.dtos.*;
+import ec.edu.ups.icc.Springboot01.products.services.ProductService;
 import jakarta.validation.Valid;
 
 import org.springframework.http.ResponseEntity;

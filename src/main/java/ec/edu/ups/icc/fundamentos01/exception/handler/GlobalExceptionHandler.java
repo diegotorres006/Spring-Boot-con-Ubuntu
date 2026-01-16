@@ -1,7 +1,7 @@
-package ec.edu.ups.icc.fundamentos01.exception.handler;
+package ec.edu.ups.icc.Springboot01.exception.handler;
 
-import ec.edu.ups.icc.fundamentos01.exception.base.ApplicationException;
-import ec.edu.ups.icc.fundamentos01.exception.response.ErrorResponse;
+import ec.edu.ups.icc.Springboot01.exception.base.ApplicationException;
+import ec.edu.ups.icc.Springboot01.exception.response.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

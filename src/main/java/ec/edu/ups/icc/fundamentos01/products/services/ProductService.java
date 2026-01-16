@@ -1,6 +1,6 @@
-package ec.edu.ups.icc.fundamentos01.products.services;
+package ec.edu.ups.icc.Springboot01.products.services;
 
-import ec.edu.ups.icc.fundamentos01.products.dtos.*;
+import ec.edu.ups.icc.Springboot01.products.dtos.*;
 import java.util.List;
 
 public interface ProductService {

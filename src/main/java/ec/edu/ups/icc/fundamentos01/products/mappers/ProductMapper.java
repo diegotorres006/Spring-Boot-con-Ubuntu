@@ -1,7 +1,7 @@
-package ec.edu.ups.icc.fundamentos01.products.mappers;
+package ec.edu.ups.icc.Springboot01.products.mappers;
 
-import ec.edu.ups.icc.fundamentos01.products.dtos.ProductResponseDto;
-import ec.edu.ups.icc.fundamentos01.products.entities.ProductEntity;
+import ec.edu.ups.icc.Springboot01.products.dtos.ProductResponseDto;
+import ec.edu.ups.icc.Springboot01.products.entities.ProductEntity;
 import java.util.stream.Collectors;
 
 public class ProductMapper {

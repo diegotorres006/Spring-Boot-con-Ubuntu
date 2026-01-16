@@ -1,4 +1,4 @@
-package ec.edu.ups.icc.fundamentos01.products.dtos;
+package ec.edu.ups.icc.Springboot01.products.dtos;
 
 import java.util.List;
 

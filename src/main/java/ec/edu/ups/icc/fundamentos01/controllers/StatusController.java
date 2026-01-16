@@ -1,4 +1,4 @@
-package ec.edu.ups.icc.fundamentos01.controllers;
+package ec.edu.ups.icc.Springboot01.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

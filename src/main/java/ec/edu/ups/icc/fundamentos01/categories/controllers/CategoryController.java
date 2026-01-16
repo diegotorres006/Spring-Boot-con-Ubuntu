@@ -1,8 +1,8 @@
-package ec.edu.ups.icc.fundamentos01.categories.controllers;
+package ec.edu.ups.icc.Springboot01.categories.controllers;
 
-import ec.edu.ups.icc.fundamentos01.categories.entities.CategoryEntity;
-import ec.edu.ups.icc.fundamentos01.categories.repositories.CategoryRepository;
-import ec.edu.ups.icc.fundamentos01.products.repositories.ProductRepository; 
+import ec.edu.ups.icc.Springboot01.categories.entities.CategoryEntity;
+import ec.edu.ups.icc.Springboot01.categories.repositories.CategoryRepository;
+import ec.edu.ups.icc.Springboot01.products.repositories.ProductRepository; 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

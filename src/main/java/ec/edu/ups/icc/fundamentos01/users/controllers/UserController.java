@@ -1,7 +1,7 @@
-package ec.edu.ups.icc.fundamentos01.users.controllers;
+package ec.edu.ups.icc.Springboot01.users.controllers;
 
-import ec.edu.ups.icc.fundamentos01.users.entities.UserEntity;
-import ec.edu.ups.icc.fundamentos01.users.repositories.UserRepository;
+import ec.edu.ups.icc.Springboot01.users.entities.UserEntity;
+import ec.edu.ups.icc.Springboot01.users.repositories.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

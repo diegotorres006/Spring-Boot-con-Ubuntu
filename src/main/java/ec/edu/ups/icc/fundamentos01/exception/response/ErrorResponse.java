@@ -1,4 +1,4 @@
-package ec.edu.ups.icc.fundamentos01.exception.response;
+package ec.edu.ups.icc.Springboot01.exception.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
-package ec.edu.ups.icc.fundamentos01.users.entities;
+package ec.edu.ups.icc.Springboot01.users.entities;
 
-import ec.edu.ups.icc.fundamentos01.core.entities.BaseModel; 
+import ec.edu.ups.icc.Springboot01.core.entities.BaseModel; 
 import jakarta.persistence.*;
 
 @Entity

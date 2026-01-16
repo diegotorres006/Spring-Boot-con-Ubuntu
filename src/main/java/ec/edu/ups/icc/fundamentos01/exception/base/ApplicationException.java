@@ -1,4 +1,4 @@
-package ec.edu.ups.icc.fundamentos01.exception.base;
+package ec.edu.ups.icc.Springboot01.exception.base;
 
 import org.springframework.http.HttpStatus;
 

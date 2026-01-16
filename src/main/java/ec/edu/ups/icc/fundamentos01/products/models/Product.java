@@ -1,7 +1,7 @@
-package ec.edu.ups.icc.fundamentos01.products.models;
+package ec.edu.ups.icc.Springboot01.products.models;
 
-import ec.edu.ups.icc.fundamentos01.products.dtos.*;
-import ec.edu.ups.icc.fundamentos01.products.entities.ProductEntity;
+import ec.edu.ups.icc.Springboot01.products.dtos.*;
+import ec.edu.ups.icc.Springboot01.products.entities.ProductEntity;
 
 public class Product {
     private int id;

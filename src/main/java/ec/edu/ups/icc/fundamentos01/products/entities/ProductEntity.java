@@ -1,8 +1,8 @@
-package ec.edu.ups.icc.fundamentos01.products.entities;
+package ec.edu.ups.icc.Springboot01.products.entities;
 
-import ec.edu.ups.icc.fundamentos01.core.entities.BaseModel;
-import ec.edu.ups.icc.fundamentos01.users.entities.UserEntity;
-import ec.edu.ups.icc.fundamentos01.categories.entities.CategoryEntity;
+import ec.edu.ups.icc.Springboot01.core.entities.BaseModel;
+import ec.edu.ups.icc.Springboot01.users.entities.UserEntity;
+import ec.edu.ups.icc.Springboot01.categories.entities.CategoryEntity;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

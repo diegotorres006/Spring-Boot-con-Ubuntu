@@ -1,16 +1,16 @@
-package ec.edu.ups.icc.fundamentos01.products.services;
+package ec.edu.ups.icc.Springboot01.products.services;
 
-import ec.edu.ups.icc.fundamentos01.products.dtos.CreateProductDto;
-import ec.edu.ups.icc.fundamentos01.products.dtos.ProductResponseDto;
-import ec.edu.ups.icc.fundamentos01.products.dtos.UpdateProductDto;
-import ec.edu.ups.icc.fundamentos01.products.dtos.PartialUpdateProductDto; 
-import ec.edu.ups.icc.fundamentos01.products.entities.ProductEntity;
-import ec.edu.ups.icc.fundamentos01.products.repositories.ProductRepository;
-import ec.edu.ups.icc.fundamentos01.users.repositories.UserRepository;
-import ec.edu.ups.icc.fundamentos01.categories.repositories.CategoryRepository;
-import ec.edu.ups.icc.fundamentos01.users.entities.UserEntity;
-import ec.edu.ups.icc.fundamentos01.categories.entities.CategoryEntity;
-import ec.edu.ups.icc.fundamentos01.products.mappers.ProductMapper;
+import ec.edu.ups.icc.Springboot01.products.dtos.CreateProductDto;
+import ec.edu.ups.icc.Springboot01.products.dtos.ProductResponseDto;
+import ec.edu.ups.icc.Springboot01.products.dtos.UpdateProductDto;
+import ec.edu.ups.icc.Springboot01.products.dtos.PartialUpdateProductDto; 
+import ec.edu.ups.icc.Springboot01.products.entities.ProductEntity;
+import ec.edu.ups.icc.Springboot01.products.repositories.ProductRepository;
+import ec.edu.ups.icc.Springboot01.users.repositories.UserRepository;
+import ec.edu.ups.icc.Springboot01.categories.repositories.CategoryRepository;
+import ec.edu.ups.icc.Springboot01.users.entities.UserEntity;
+import ec.edu.ups.icc.Springboot01.categories.entities.CategoryEntity;
+import ec.edu.ups.icc.Springboot01.products.mappers.ProductMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;

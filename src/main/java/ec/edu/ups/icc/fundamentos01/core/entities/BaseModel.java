@@ -1,4 +1,4 @@
-package ec.edu.ups.icc.fundamentos01.core.entities;
+package ec.edu.ups.icc.Springboot01.core.entities;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
