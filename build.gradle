@@ -10,7 +10,7 @@ description = 'Proyecto de práctica para fundamentos de Spring Boot en Programa
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(24)
+		languageVersion = JavaLanguageVersion.of(17)
 	}
 }
 
