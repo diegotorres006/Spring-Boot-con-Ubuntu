@@ -79,4 +79,9 @@ public class ProductController {
     public ResponseEntity<Boolean> validateName(@RequestBody ValidateProductNameDto dto) {
         return ResponseEntity.ok(productService.validateName(dto.id, dto.name));
     }
+
+    @GetMapping
+    public ResponseEntity<?> getAllProducts() {
+        return ResponseEntity.ok(productService.findAll()); 
+    }
 }
