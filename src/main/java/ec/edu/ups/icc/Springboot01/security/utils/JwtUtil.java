@@ -1,7 +1,7 @@
 package ec.edu.ups.icc.Springboot01.security.utils;
 
 import ec.edu.ups.icc.Springboot01.security.config.JwtProperties;
-import ec.edu.ups.icc.Springboot01.security.services.UserDetailsImpl;
+import ec.edu.ups.icc.Springboot01.security.models.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.Authentication;

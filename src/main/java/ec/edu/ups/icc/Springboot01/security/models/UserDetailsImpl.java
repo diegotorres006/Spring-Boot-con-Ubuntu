@@ -1,4 +1,4 @@
-package ec.edu.ups.icc.Springboot01.security.services;
+package ec.edu.ups.icc.Springboot01.security.models;
 
 import ec.edu.ups.icc.Springboot01.users.entities.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
     private Long id;
-    private String name;
-    private String email;
+    private String name;  // Añadido para solucionar error en AuthService
+    private String email; // Añadido para solucionar error en JwtUtil
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -23,18 +23,26 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public static UserDetailsImpl build(UserEntity user) {
-        var authorities = user.getRoles().stream()
+        return new UserDetailsImpl(
+            user.getId(),
+            user.getName(), // Extraemos el nombre de la entidad
+            user.getEmail(), // Extraemos el email de la entidad
+            user.getPassword(),
+            user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
-                .collect(Collectors.toList());
-        return new UserDetailsImpl(user.getId(), user.getName(), user.getEmail(), user.getPassword(), authorities);
+                .collect(Collectors.toList())
+        );
     }
 
-    @Override public Collection<? extends GrantedAuthority> getAuthorities() { return authorities; }
-    @Override public String getPassword() { return password; }
-    @Override public String getUsername() { return email; }
+    // Métodos personalizados que necesitan tus servicios
     public Long getId() { return id; }
     public String getName() { return name; }
     public String getEmail() { return email; }
+
+    // Métodos obligatorios de la interfaz UserDetails
+    @Override public String getUsername() { return email; }
+    @Override public String getPassword() { return password; }
+    @Override public Collection<? extends GrantedAuthority> getAuthorities() { return authorities; }
     @Override public boolean isAccountNonExpired() { return true; }
     @Override public boolean isAccountNonLocked() { return true; }
     @Override public boolean isCredentialsNonExpired() { return true; }

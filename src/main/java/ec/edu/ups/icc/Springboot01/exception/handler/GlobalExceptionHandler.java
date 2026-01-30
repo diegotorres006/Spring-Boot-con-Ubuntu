@@ -4,7 +4,10 @@ import ec.edu.ups.icc.Springboot01.exception.base.ApplicationException;
 import ec.edu.ups.icc.Springboot01.exception.response.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -70,4 +73,14 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(response);
     }
+
+    @ExceptionHandler({AuthorizationDeniedException.class, AccessDeniedException.class})
+public ResponseEntity<ErrorResponse> handleForbidden(Exception ex, HttpServletRequest request) {
+    ErrorResponse error = new ErrorResponse(
+            HttpStatus.FORBIDDEN, 
+            "No tienes permisos suficientes para acceder a este recurso", 
+            request.getRequestURI()
+    );
+    return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
+}
 }

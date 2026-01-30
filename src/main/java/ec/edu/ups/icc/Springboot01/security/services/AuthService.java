@@ -5,6 +5,7 @@ import ec.edu.ups.icc.Springboot01.exception.domain.ConflictException;
 import ec.edu.ups.icc.Springboot01.security.dtos.*;
 import ec.edu.ups.icc.Springboot01.security.entities.RoleEntity;
 import ec.edu.ups.icc.Springboot01.security.models.RoleName;
+import ec.edu.ups.icc.Springboot01.security.models.UserDetailsImpl;
 import ec.edu.ups.icc.Springboot01.security.repositories.RoleRepository;
 import ec.edu.ups.icc.Springboot01.security.utils.JwtUtil;
 import ec.edu.ups.icc.Springboot01.users.entities.UserEntity;

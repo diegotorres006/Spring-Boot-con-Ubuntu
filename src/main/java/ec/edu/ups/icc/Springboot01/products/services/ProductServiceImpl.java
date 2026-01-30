@@ -3,13 +3,19 @@ package ec.edu.ups.icc.Springboot01.products.services;
 import ec.edu.ups.icc.Springboot01.products.dtos.*;
 import ec.edu.ups.icc.Springboot01.products.entities.ProductEntity;
 import ec.edu.ups.icc.Springboot01.products.repositories.ProductRepository;
+import ec.edu.ups.icc.Springboot01.security.models.UserDetailsImpl;
 import ec.edu.ups.icc.Springboot01.users.repositories.UserRepository;
 import ec.edu.ups.icc.Springboot01.categories.repositories.CategoryRepository;
 import ec.edu.ups.icc.Springboot01.users.entities.UserEntity;
 import ec.edu.ups.icc.Springboot01.categories.entities.CategoryEntity;
 import ec.edu.ups.icc.Springboot01.products.mappers.ProductMapper;
+
 import org.springframework.data.domain.*;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,9 +35,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponseDto create(CreateProductDto dto) {
-        UserEntity owner = userRepo.findById(dto.userId)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + dto.userId));
+    @Transactional
+    public ProductResponseDto create(CreateProductDto dto, UserDetailsImpl currentUser) {
+        // Obtenemos el owner directamente del token por seguridad
+        UserEntity owner = userRepo.findById(currentUser.getId())
+                .orElseThrow(() -> new RuntimeException("Usuario autenticado no encontrado"));
         
         Set<CategoryEntity> categories = new HashSet<>();
         if (dto.categoryIds != null) {
@@ -44,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
         entity.setName(dto.name);
         entity.setPrice(dto.price);
         entity.setDescription(dto.description);
-        entity.setOwner(owner);
+        entity.setOwner(owner); // Asignación automática de propiedad
         entity.setCategories(categories);
         entity.setDeleted(false);
         
@@ -52,23 +60,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductResponseDto> findAll() {
-        return productRepo.findAll().stream()
-                .map(ProductMapper::toResponse)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public ProductResponseDto findOne(int id) {
-        return productRepo.findById((long) id)
-                .map(ProductMapper::toResponse)
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + id));
-    }
-
-    @Override
-    public ProductResponseDto update(int id, UpdateProductDto dto) {
+    @Transactional
+    public ProductResponseDto update(int id, UpdateProductDto dto, UserDetailsImpl currentUser) {
         ProductEntity entity = productRepo.findById((long) id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        
+        validateOwnership(entity, currentUser); // VALIDACIÓN PRÁCTICA 13
+
         entity.setName(dto.name);
         entity.setPrice(dto.price);
         entity.setDescription(dto.description);
@@ -76,30 +74,71 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponseDto partialUpdate(int id, PartialUpdateProductDto dto) {
+    @Transactional
+    public ProductResponseDto partialUpdate(int id, PartialUpdateProductDto dto, UserDetailsImpl currentUser) {
         ProductEntity entity = productRepo.findById((long) id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        
+        validateOwnership(entity, currentUser);
+
         if (dto.name != null) entity.setName(dto.name);
         if (dto.price != null) entity.setPrice(dto.price);
         return ProductMapper.toResponse(productRepo.save(entity));
     }
 
     @Override
-    public Object delete(int id) {
+    @Transactional
+    public Object delete(int id, UserDetailsImpl currentUser) {
         ProductEntity entity = productRepo.findById((long) id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
-        entity.setDeleted(true); // Borrado lógico
+        
+        validateOwnership(entity, currentUser);
+
+        entity.setDeleted(true); // Se mantiene el borrado lógico
         productRepo.save(entity);
-        return new Object() { public String message = "Producto eliminado lógicamente"; };
+        return new Object() { public String message = "Producto eliminado por su dueño o administrador"; };
+    }
+
+    // ============== VALIDACIÓN DE PROPIEDAD (OWNERSHIP) ==============
+
+    private void validateOwnership(ProductEntity product, UserDetailsImpl currentUser) {
+        // 1. ADMIN y MODERATOR se saltan la validación
+        if (hasAnyRole(currentUser, "ROLE_ADMIN", "ROLE_MODERATOR")) {
+            return;
+        }
+
+        // 2. USER solo puede modificar sus propios productos
+        if (!product.getOwner().getId().equals(currentUser.getId())) {
+            throw new AccessDeniedException("No tienes permiso sobre este recurso ajeno");
+        }
+    }
+
+    private boolean hasAnyRole(UserDetailsImpl user, String... roles) {
+        for (String role : roles) {
+            for (GrantedAuthority authority : user.getAuthorities()) {
+                if (authority.getAuthority().equals(role)) return true;
+            }
+        }
+        return false;
+    }
+
+    // ============== MÉTODOS DE CONSULTA (SIN CAMBIOS) ==============
+
+    @Override
+    public List<ProductResponseDto> findAll() {
+        return productRepo.findAll().stream()
+                .filter(p -> !p.isDeleted()) // Filtro de borrado lógico
+                .map(ProductMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public boolean validateName(Integer id, String name) {
-        // Implementación básica de validación
-        return name != null && !name.trim().isEmpty();
+    public ProductResponseDto findOne(int id) {
+        return productRepo.findById((long) id)
+                .filter(p -> !p.isDeleted())
+                .map(ProductMapper::toResponse)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado o eliminado"));
     }
-
-    // --- MÉTODOS DE PAGINACIÓN ---
 
     @Override
     public Page<ProductResponseDto> findAllPaged(int page, int size, String[] sort) {
@@ -119,11 +158,13 @@ public class ProductServiceImpl implements ProductService {
         return productRepo.findAllWithFilters(name, minPrice, maxPrice, categoryId, pageable).map(ProductMapper::toResponse);
     }
 
+    @Override
+    public boolean validateName(Integer id, String name) {
+        return name != null && !name.trim().isEmpty();
+    }
+
     private Pageable createPageable(int page, int size, String[] sort) {
-        if (sort.length == 2 && (sort[1].equalsIgnoreCase("asc") || sort[1].equalsIgnoreCase("desc"))) {
-            Sort.Direction direction = sort[1].equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
-            return PageRequest.of(page, size, Sort.by(direction, sort[0]));
-        }
-        return PageRequest.of(page, size, Sort.by(sort[0]).ascending());
+        Sort.Direction direction = (sort.length == 2 && sort[1].equalsIgnoreCase("desc")) ? Sort.Direction.DESC : Sort.Direction.ASC;
+        return PageRequest.of(page, size, Sort.by(direction, sort[0]));
     }
 }
