@@ -24,6 +24,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     runtimeOnly 'org.postgresql:postgresql'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    // Si es build.gradle (Groovy), usa comillas simples o dobles:
+implementation 'org.springframework.boot:spring-boot-starter-actuator'
     
     // ====== SEGURIDAD Y JWT ======
     implementation 'org.springframework.boot:spring-boot-starter-security'

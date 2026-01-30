@@ -40,12 +40,20 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf(csrf -> csrf.disable())
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
+            // Rutas públicas
             .requestMatchers("/auth/**").permitAll()
-            .requestMatchers("/error").permitAll() // AGREGA ESTA LÍNEA
+            .requestMatchers("/error").permitAll()
+            .requestMatchers("/actuator/health").permitAll() // CLAVE PARA PRÁCTICA 14
+            
+            // Rutas protegidas (Solo ADMIN puede ver métricas completas)
+            .requestMatchers("/actuator/**").hasRole("ADMIN") 
+            
+            // El resto requiere token JWT
             .anyRequest().authenticated()
-        );
-    
-    http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        )
+        // No olvides añadir tu filtro JWT aquí antes de cerrar
+        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
     return http.build();
 }
 }

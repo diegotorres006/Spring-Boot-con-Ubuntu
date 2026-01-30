@@ -1,0 +1,27 @@
+services:
+  db-prod:
+    image: postgres:15-alpine
+    container_name: mi-api-postgres-docker
+    environment:
+      POSTGRES_DB: devdb
+      POSTGRES_USER: ups
+      POSTGRES_PASSWORD: ups123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api-prod:
+    build: .
+    container_name: mi-api-spring
+    ports:
+      - "8081:8080" # Usamos 8081 para no chocar con tu servicio nativo actual
+    environment:
+      DATABASE_URL: jdbc:postgresql://db-prod:5432/devdb
+      DB_USERNAME: ups
+      DB_PASSWORD: ups123
+      SPRING_PROFILES_ACTIVE: prod
+    depends_on:
+      db-prod:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
